@@ -1,0 +1,19 @@
+{
+  "name": "open-portal",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "bootstrap": "npm install && lerna bootstrap",
+    "clean": "lerna clean",
+    "start:pw": "lerna run --scope portal-web serve --stream",
+    "start:mm": "lerna run --scope message-manage serve --stream"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "lerna": "^5.1.6"
+  },
+  "devDependencies": {}
+}
