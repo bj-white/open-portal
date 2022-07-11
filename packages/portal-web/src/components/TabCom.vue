@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div class="item_wrapper" :class="{ active: item.active }" v-for="item in tabs" :key="item.id">
+    <div @click="$emit('handleSwitch', item.id)" class="item_wrapper" :class="{ active: item.active }" v-for="item in tabs" :key="item.id">
       <i v-if="!item.disabled" @click="$emit('handleClose', item.id)">&times;</i>
-      <span @click="$emit('handleSwitch', item.id)">{{ item.name }}</span>
+      <span>{{ item.name }}</span>
     </div>
   </div>
 </template>
@@ -35,6 +35,7 @@ export default {
       margin-right: 5px;
       font-style: normal;
       font-size: 16px;
+      vertical-align: bottom;
     }
   }
 </style>
