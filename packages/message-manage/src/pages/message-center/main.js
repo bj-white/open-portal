@@ -19,8 +19,9 @@ if (!window.__POWERED_BY_QIANKUN__) {
 
 function render (props = {}) {
   const { container, baseUrl } = props
+  console.log(process.env.BASE_URL)
   router = new VueRouter({
-    base: window.__POWERED_BY_QIANKUN__ ? baseUrl : '/',
+    base: window.__POWERED_BY_QIANKUN__ ? baseUrl : `${process.env.BASE_URL}message-center`,
     mode: 'history',
     routes
   })
@@ -30,11 +31,14 @@ function render (props = {}) {
   }).$mount(container ? container.querySelector('#app') : '#app')
 }
 
+// function initStore (props) {}
+
 export async function bootstrap() {
   console.log('[vue] vue app bootstraped');
 }
 export async function mount(props) {
   console.log('[vue] props from main framework', props);
+  // initStore(props)
   render(props);
 }
 export async function unmount() {

@@ -52,7 +52,7 @@ export default {
     }
   },
   created () {
-    this.goMenu(0)
+    // this.goMenu(0)
   },
   mounted () {
     registerMicroApps([
