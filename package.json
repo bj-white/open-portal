@@ -7,7 +7,8 @@
     "bootstrap": "npm install && lerna bootstrap",
     "clean": "lerna clean",
     "start:pw": "lerna run --scope portal-web serve --stream",
-    "start:mm": "lerna run --scope message-manage serve --stream"
+    "start:mm": "lerna run --scope message-manage serve --stream",
+    "build:mm": "lerna run --scope message-manage build --stream"
   },
   "keywords": [],
   "author": "",

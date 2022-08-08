@@ -8,7 +8,7 @@ const pagesMap = pageList.reduce((prev, page) => {
   prev[page] = {
     title: `message-manage-${page}`,
     entry: `src/pages/${page}/main.js`,
-    tempalte: 'public/index.html',
+    template: 'public/index.html',
     filename: `${page}/index.html`
   }
   return prev

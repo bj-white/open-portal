@@ -30,7 +30,7 @@ export default {
         {
           id: 0,
           name: '首页',
-          path: '',
+          path: 'home',
           active: false,
           disabled: true
         },
@@ -52,7 +52,7 @@ export default {
     }
   },
   created () {
-    // this.goMenu(0)
+    this.init()
   },
   mounted () {
     registerMicroApps([
@@ -75,25 +75,36 @@ export default {
     start()
   },
   methods: {
+    init () {
+      const pathname = window.location.pathname
+      const activeItem = this.menus.filter((item) => {
+        return pathname.indexOf(item.path) !== -1
+      })
+      if (activeItem.length) {
+        activeItem[0].active = true
+        this.tabs.push(activeItem[0])
+      } else {
+        this.goMenu(0)
+      }
+    },
     goMenu (id) {
-      for (let i = 0; i < this.menus.length; i++) {
-        if (this.menus[i].id === id) {
-          window.history.pushState({}, this.menus[i].name, '/portal/' + this.menus[i].path)
-          let flag = false
-          for (let j = 0; j < this.tabs.length; j++) {
-            if (this.tabs[j].id === id) {
-              this.tabs[j].active = true
-              flag = true
-            } else {
-              this.tabs[j].active = false
-            }
-          }
-          if (!flag) {
-            this.menus[i].active = true
-            this.tabs.push(this.menus[i])
-          }
-          break
+      const result = this.menus.find((item) => {
+        return item.id === id
+      })
+      if (result) {
+        window.history.pushState({}, result.name, '/portal/' + result.path)
+      }
+      const tab = this.tabs.filter((item) => {
+        if (item.id === id) {
+          item.active = true
+        } else {
+          item.active = false
         }
+        return item.id === id
+      })
+      if (!tab.length) {
+        result.active = true
+        this.tabs.push(result)
       }
     },
     switchMenu () {

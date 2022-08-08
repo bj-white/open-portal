@@ -19,7 +19,6 @@ if (!window.__POWERED_BY_QIANKUN__) {
 
 function render (props = {}) {
   const { container, baseUrl } = props
-  console.log(process.env.BASE_URL)
   router = new VueRouter({
     base: window.__POWERED_BY_QIANKUN__ ? baseUrl : `${process.env.BASE_URL}message-center`,
     mode: 'history',
