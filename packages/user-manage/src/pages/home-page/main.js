@@ -1,13 +1,9 @@
 import Vue from 'vue'
-import VueRouter from 'vue-router'
 import App from './App'
-import routes from './router/index'
+
 import { MicroAppStore } from '../../../../utils/portal-utils/lib/microApp'
 
-Vue.use(VueRouter)
-
 let instance = null
-let router = null
 const rootState = {}
 
 if (!window.__POWERED_BY_QIANKUN__) {
@@ -20,15 +16,8 @@ if (!window.__POWERED_BY_QIANKUN__) {
 }
 
 function render (props = {}) {
-  console.log(process.env.BASE_URL)
-  const { container, baseUrl } = props
-  router = new VueRouter({
-    base: window.__POWERED_BY_QIANKUN__ ? baseUrl : `${process.env.BASE_URL}message-center`,
-    mode: 'history',
-    routes
-  })
+  const { container } = props
   instance = new Vue({
-    router,
     data () {
       return rootState
     },

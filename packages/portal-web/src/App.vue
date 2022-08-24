@@ -20,42 +20,51 @@
 <script>
 import { registerMicroApps, start } from 'qiankun'
 import TabCom from './components/TabCom.vue'
+// import { microAppStateActions } from './utils/microApp'
+const menus = [
+  {
+    id: 0,
+    name: '首页',
+    path: 'home',
+    active: false,
+    disabled: true
+  },
+  {
+    id: 1,
+    name: '消息中心',
+    path: 'message-center',
+    active: false
+  },
+  {
+    id: 2,
+    name: '消息注册',
+    path: 'message-register',
+    active: false
+  }
+];
 export default {
   components: {
     TabCom
   },
   data () {
     return {
-      menus: [
-        {
-          id: 0,
-          name: '首页',
-          path: 'home',
-          active: false,
-          disabled: true
-        },
-        {
-          id: 1,
-          name: '消息中心',
-          path: 'message-center',
-          active: false
-        },
-        {
-          id: 2,
-          name: '消息注册',
-          path: 'message-register',
-          active: false
-        }
-      ],
+      menus,
       close: false,
-      tabs: []
+      tabs: [menus[0]]
     }
   },
   created () {
+    this.close = window.sessionStorage.getItem('menuClose') === 'true'
     this.init()
   },
   mounted () {
     registerMicroApps([
+      {
+        name: 'home-page',
+        entry: '/portal-products/basic-console/user-manage/home-page',
+        container: '#container',
+        activeRule: '/portal/home'
+      },
       {
         name: 'message-center',
         entry: '/portal-products/basic-console/message-manage/message-center',
@@ -81,18 +90,20 @@ export default {
         return pathname.indexOf(item.path) !== -1
       })
       if (activeItem.length) {
-        activeItem[0].active = true
-        this.tabs.push(activeItem[0])
+        this.goMenu(activeItem[0].id, false)
       } else {
         this.goMenu(0)
       }
     },
-    goMenu (id) {
+    goMenu (id, jump = true) {
+      /* microAppStateActions.setState({
+        id
+      }) */
       const result = this.menus.find((item) => {
         return item.id === id
       })
-      if (result) {
-        window.history.pushState({}, result.name, '/portal/' + result.path)
+      if (result && jump) {
+        window.history.pushState({}, result.name, process.env.BASE_URL + result.path)
       }
       const tab = this.tabs.filter((item) => {
         if (item.id === id) {
@@ -109,6 +120,7 @@ export default {
     },
     switchMenu () {
       this.close = !this.close
+      window.sessionStorage.setItem('menuClose', this.close)
     },
     handleClose (id) {
       for (let i = 0; i < this.tabs.length; i++) {
@@ -148,10 +160,13 @@ export default {
     left: 0;
     &.close {
       .menu_wrapper {
-        width: 64px;
+        & > div {
+          display: none;
+        }
+        width: 50px;
       }
       .tab_view_wrapper {
-        left: 64px;
+        left: 50px;
       }
     }
     .menu_wrapper {
